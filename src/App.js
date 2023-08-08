@@ -1,23 +1,26 @@
 import logo from './logo.svg';
+import react, {useState} from 'react';
 import './App.css';
+import { useEffect } from 'react';
 
 function App() {
+  let [first, setfirst] = useState(0);
+  let [hovered, setHovered] = useState(false);
+  window.addEventListener('message', (event) => {
+    if (event.origin === 'https://main--childappsass.netlify.app/') {
+      const receivedData = event.data;
+      setfirst(receivedData.key[0])
+      setHovered(receivedData.key[1])
+     }
+  });
+  
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      This is a parent
+      <h1>{first}</h1>
+      <h2>{hovered}</h2>
+      <iframe src="https://main--childappsass.netlify.app/"></iframe>
     </div>
   );
 }
